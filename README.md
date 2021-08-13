@@ -37,7 +37,7 @@ func New() (*State, error) {
     if err != nil {
         return nil, err
     }
-    s.FooClient = fooClient
+    s.fooClient = fooClient
 
     ...
 
