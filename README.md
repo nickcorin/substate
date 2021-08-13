@@ -147,7 +147,7 @@ Using the `gensubstate` tool, running `go generate` on the `foo` package generat
 package foo
 
 import (
-	"testing"
+    "testing"
 
     "project/bar"
 )
