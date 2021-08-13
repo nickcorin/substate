@@ -145,7 +145,7 @@ func Generate(src, dest, typeName string) error {
 
 				f := Field{
 					Method:  method.Names[0].Name,
-					Name:    strings.ToLower(method.Names[0].Name),
+					Name:    camelCase(method.Names[0].Name),
 					Params:  paramString(params),
 					Results: returnString(returns),
 					Type:    returnString(returns),
@@ -217,4 +217,8 @@ func returnString(returns []string) string {
 	}
 
 	return fmt.Sprintf("(%s)", strings.Join(returns, ", "))
+}
+
+func camelCase(s string) string {
+	return strings.ToLower(s[:1]) + s[1:]
 }

@@ -31,31 +31,31 @@ func (fn InjectorFunc) Inject(s *substate) {
 	fn(s)
 }
 
-// WithFooClient returns an Injector which sets the fooclient on substate.
-func WithFooClient(fooclient FooClient) InjectorFunc {
+// WithFooClient returns an Injector which sets the fooClient on substate.
+func WithFooClient(fooClient FooClient) InjectorFunc {
 	return func(s *substate) {
-		s.fooclient = fooclient
+		s.fooClient = fooClient
 	}
 }
 
-// WithBarClient returns an Injector which sets the barclient on substate.
-func WithBarClient(barclient BarClient) InjectorFunc {
+// WithBarClient returns an Injector which sets the barClient on substate.
+func WithBarClient(barClient BarClient) InjectorFunc {
 	return func(s *substate) {
-		s.barclient = barclient
+		s.barClient = barClient
 	}
 }
 
 type substate struct {
-	fooclient FooClient
-	barclient BarClient
+	fooClient FooClient
+	barClient BarClient
 }
 
 // FooClient implements the Substate interface.
 func (s *substate) FooClient() FooClient {
-	return s.fooclient
+	return s.fooClient
 }
 
 // BarClient implements the Substate interface.
 func (s *substate) BarClient() BarClient {
-	return s.barclient
+	return s.barClient
 }
