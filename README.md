@@ -1,5 +1,10 @@
 ## Substate
 
+![Go](https://github.com/nickcorin/substate/workflows/Go/badge.svg?branch=master) 
+[![Go Report Card](https://goreportcard.com/badge/github.com/nickcorin/substate?style=flat-square)](https://goreportcard.com/report/github.com/nickcorin/substate)
+[![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](http://godoc.org/github.com/nickcorin/substate)
+
+
 Substate provides the `gensubstate` tool which generates implementations of Dependency Injection interfaces.
 
 ### Installation
