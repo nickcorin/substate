@@ -1,16 +1,12 @@
 package testdata
 
-import "database/sql"
-
 //go:generate gensubstate
 
 type Substate interface {
-	Database() *sql.DB
 	FooClient() FooClient
+	BarClient() BarClient
 }
 
-type Foo struct{}
+type FooClient interface{}
 
-type FooClient interface {
-	Lookup() (*Foo, error)
-}
+type BarClient interface{}

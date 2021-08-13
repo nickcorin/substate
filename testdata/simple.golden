@@ -3,7 +3,6 @@
 package testdata
 
 import (
-	"database/sql"
 	"testing"
 )
 
@@ -32,13 +31,6 @@ func (fn InjectorFunc) Inject(s *substate) {
 	fn(s)
 }
 
-// WithDatabase returns an Injector which sets the database on substate.
-func WithDatabase(database *sql.DB) InjectorFunc {
-	return func(s *substate) {
-		s.database = database
-	}
-}
-
 // WithFooClient returns an Injector which sets the fooclient on substate.
 func WithFooClient(fooclient FooClient) InjectorFunc {
 	return func(s *substate) {
@@ -46,17 +38,24 @@ func WithFooClient(fooclient FooClient) InjectorFunc {
 	}
 }
 
-type substate struct {
-	database  *sql.DB
-	fooclient FooClient
+// WithBarClient returns an Injector which sets the barclient on substate.
+func WithBarClient(barclient BarClient) InjectorFunc {
+	return func(s *substate) {
+		s.barclient = barclient
+	}
 }
 
-// Database implements the Substate interface.
-func (s *substate) Database() *sql.DB {
-	return s.database
+type substate struct {
+	fooclient FooClient
+	barclient BarClient
 }
 
 // FooClient implements the Substate interface.
 func (s *substate) FooClient() FooClient {
 	return s.fooclient
+}
+
+// BarClient implements the Substate interface.
+func (s *substate) BarClient() BarClient {
+	return s.barclient
 }

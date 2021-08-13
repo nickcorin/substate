@@ -60,6 +60,7 @@ func Generate(src, dest string) error {
 		return fmt.Errorf("get working dir: %w", err)
 	}
 
+	// Grab the source code - we want to be able to grab certain snippets.
 	srcData, err := ioutil.ReadFile(filepath.Join(pwd, src))
 	if err != nil {
 		log.Fatal(err)
@@ -72,7 +73,9 @@ func Generate(src, dest string) error {
 	}
 
 	data := TemplateData{
-		Source:  src,
+		Source: src,
+		// "testing" won't be imported by the source file, so we've got to add
+		// it here by default.
 		Imports: []string{"\"testing\""},
 	}
 
@@ -87,6 +90,10 @@ func Generate(src, dest string) error {
 			data.Package = t.Name.Name
 			return true
 		case *ast.TypeSpec:
+			// We only care about the Substate type.
+			//
+			// TODO: Add a -type flag to configure the name of the interface we
+			// look for.
 			if strings.EqualFold(t.Name.Name, "Substate") {
 				found = true
 				return true
