@@ -65,7 +65,7 @@ func TestGenerate(t *testing.T) {
 			})
 
 			path := filepath.Join("testdata", test.input)
-			err = substate.Generate(path, tmp.Name())
+			err = substate.Generate(path, tmp.Name(), "Substate")
 			require.Equal(t, test.err, err)
 
 			actual, err := ioutil.ReadFile(tmp.Name())

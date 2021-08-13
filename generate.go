@@ -54,7 +54,7 @@ type Field struct {
 
 // Generate reads the source file and generates a Substate implementation on a
 // concrete type in order to be used to testing.
-func Generate(src, dest string) error {
+func Generate(src, dest, typeName string) error {
 	pwd, err := os.Getwd()
 	if err != nil {
 		return fmt.Errorf("get working dir: %w", err)
@@ -90,11 +90,8 @@ func Generate(src, dest string) error {
 			data.Package = t.Name.Name
 			return true
 		case *ast.TypeSpec:
-			// We only care about the Substate type.
-			//
-			// TODO: Add a -type flag to configure the name of the interface we
-			// look for.
-			if strings.EqualFold(t.Name.Name, "Substate") {
+			// We only care about the one interface.
+			if strings.EqualFold(t.Name.Name, typeName) {
 				found = true
 				return true
 			}
