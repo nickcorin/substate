@@ -2,6 +2,12 @@
 
 Substate provides the `gensubstate` tool which generates implementations of Dependency Injection interfaces.
 
+### Installation
+
+Run `go install github.com/nickcorin/substate/cmd/gensubstate`.
+
+NOTE: Make sure that your `$GOBIN` has been added to `$PATH`.
+
 ### What are "Dependency Injection Interfaces"?
 
 Consider that you're writing an application that contains some global state object which holds your client dependencies. It could look something like this:
