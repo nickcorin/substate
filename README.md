@@ -224,7 +224,7 @@ func TestInteractWithBar(t *testing.T) {
     mockClient := bar.NewMockClient()
 
     // Provide the Mock client to Substate using the generated InjectorFunc.
-    s := foo.NewSubstateForTesting(t, WithBarClient(mockClient))
+    s := foo.NewSubstateForTesting(t, foo.WithBarClient(mockClient))
 
     // You can now test InteractWithBar!
     err := foo.InteractWithBar(s)
