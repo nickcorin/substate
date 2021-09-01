@@ -2,10 +2,6 @@
 
 package testdata
 
-import (
-	"testing"
-)
-
 func NewSubstate(injectors ...Injector) *substate {
 	var s substate
 
