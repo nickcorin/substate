@@ -6,9 +6,7 @@ import (
 	"testing"
 )
 
-// NewSubstateForTesting returns an implementation of Substate which can be used
-// for testing.
-func NewSubstateForTesting(_ *testing.TB, injectors ...Injector) *substate {
+func NewSubstate(injectors ...Injector) *substate {
 	var s substate
 
 	for _, injector := range injectors {
@@ -31,14 +29,12 @@ func (fn InjectorFunc) Inject(s *substate) {
 	fn(s)
 }
 
-// WithFooClient returns an Injector which sets the fooClient on substate.
 func WithFooClient(fooClient FooClient) InjectorFunc {
 	return func(s *substate) {
 		s.fooClient = fooClient
 	}
 }
 
-// WithBarClient returns an Injector which sets the barClient on substate.
 func WithBarClient(barClient BarClient) InjectorFunc {
 	return func(s *substate) {
 		s.barClient = barClient
@@ -50,12 +46,9 @@ type substate struct {
 	barClient BarClient
 }
 
-// FooClient implements the Substate interface.
 func (s *substate) FooClient() FooClient {
 	return s.fooClient
 }
-
-// BarClient implements the Substate interface.
 func (s *substate) BarClient() BarClient {
 	return s.barClient
 }
