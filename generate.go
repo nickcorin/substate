@@ -74,6 +74,9 @@ func Generate(src, dest, typeName string) error {
 
 	data := TemplateData{
 		Source: src,
+		// "testing" won't be imported by the source file, so we've got to add
+		// it here by default.
+		Imports: []string{"\"testing\""},
 	}
 
 	var (
