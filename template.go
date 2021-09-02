@@ -14,7 +14,7 @@ import (
 
 // NewSubstateForTesting returns an implementation of Substate which can be used
 // for testing.
-func NewSubstateForTesting(_ *testing.TB, injectors...Injector) *substate {
+func NewSubstateForTesting(_ testing.TB, injectors...Injector) *substate {
 	var s substate
 
 	for _, injector := range injectors {
