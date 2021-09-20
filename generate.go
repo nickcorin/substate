@@ -23,6 +23,9 @@ type TemplateData struct {
 	// The package in which the output file will be written.
 	Package string
 
+	// The name of the generated type.
+	TypeName string
+
 	Imports []string
 	Fields  []Field
 }
@@ -73,7 +76,8 @@ func Generate(src, dest, typeName string) error {
 	}
 
 	data := TemplateData{
-		Source: src,
+		Source:   src,
+		TypeName: typeName,
 		// "testing" won't be imported by the source file, so we've got to add
 		// it here by default.
 		Imports: []string{"\"testing\""},
@@ -171,7 +175,12 @@ func Generate(src, dest, typeName string) error {
 		return errs[0]
 	}
 
-	t, err := template.New("").Parse(tpl)
+	// Populate the functions which should be exposed to the template.
+	funcMap := template.FuncMap{
+		"ToCamel": camelCase,
+	}
+
+	t, err := template.New("").Funcs(funcMap).Parse(tpl)
 	if err != nil {
 		return fmt.Errorf("parse template: %w", err)
 	}

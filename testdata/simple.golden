@@ -6,8 +6,7 @@ import (
 	"testing"
 )
 
-// NewSubstateForTesting returns an implementation of Substate which can be used
-// for testing.
+// NewSubstateForTesting returns an implementation of Substate which can be used for testing.
 func NewSubstateForTesting(_ testing.TB, injectors ...Injector) *substate {
 	var s substate
 
@@ -22,8 +21,7 @@ type Injector interface {
 	Inject(*substate)
 }
 
-// InjectorFunc defines a convenience type making it easy to implement
-// Injectors.
+// InjectorFunc defines a convenience type making it easy to implement Injectors.
 type InjectorFunc func(*substate)
 
 // Inject implements the Injector interface.

@@ -39,6 +39,7 @@ func TestGenerate(t *testing.T) {
 		input  string
 		golden string
 		err    error
+		flags  map[string]string
 	}
 
 	tests := map[string]test{
@@ -46,6 +47,15 @@ func TestGenerate(t *testing.T) {
 			input:  "simple.go",
 			golden: "simple.golden",
 			err:    nil,
+			flags:  map[string]string{},
+		},
+		"custom type": {
+			input:  "custom_type.go",
+			golden: "custom_type.golden",
+			err:    nil,
+			flags: map[string]string{
+				"typeName": "ServiceLocator",
+			},
 		},
 	}
 
@@ -65,7 +75,13 @@ func TestGenerate(t *testing.T) {
 			})
 
 			path := filepath.Join("testdata", test.input)
-			err = substate.Generate(path, tmp.Name(), "Substate")
+
+			typeName := "Substate"
+			if tName, ok := test.flags["typeName"]; ok {
+				typeName = tName
+			}
+
+			err = substate.Generate(path, tmp.Name(), typeName)
 			require.Equal(t, test.err, err)
 
 			actual, err := ioutil.ReadFile(tmp.Name())

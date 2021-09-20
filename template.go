@@ -12,10 +12,9 @@ import (
 )
 {{end}}
 
-// NewSubstateForTesting returns an implementation of Substate which can be used
-// for testing.
-func NewSubstateForTesting(_ testing.TB, injectors...Injector) *substate {
-	var s substate
+// New{{.TypeName}}ForTesting returns an implementation of {{.TypeName}} which can be used for testing.
+func New{{.TypeName}}ForTesting(_ testing.TB, injectors...Injector) *{{.TypeName | ToCamel}}{
+	var s {{.TypeName | ToCamel }}
 
 	for _, injector := range injectors {
 		injector.Inject(&s)
@@ -25,33 +24,32 @@ func NewSubstateForTesting(_ testing.TB, injectors...Injector) *substate {
 }
 
 type Injector interface {
-	Inject(*substate)
+	Inject(*{{.TypeName | ToCamel}})
 }
 
-// InjectorFunc defines a convenience type making it easy to implement
-// Injectors.
-type InjectorFunc func(*substate)
+// InjectorFunc defines a convenience type making it easy to implement Injectors.
+type InjectorFunc func(*{{.TypeName | ToCamel}})
 
 // Inject implements the Injector interface.
-func (fn InjectorFunc) Inject(s *substate) {
+func (fn InjectorFunc) Inject(s *{{.TypeName | ToCamel}}) {
 	fn(s)
 }
 {{range $index, $field := .Fields}}
-// With{{$field.Method}} returns an Injector which sets the {{$field.Name}} on substate.
+// With{{$field.Method}} returns an Injector which sets the {{$field.Name}} on {{$.TypeName | ToCamel}}.
 func With{{$field.Method}}({{$field.Name}} {{$field.Type}}) InjectorFunc {
-	return func(s *substate) {
+	return func(s *{{$.TypeName | ToCamel}}) {
 		s.{{$field.Name}} = {{$field.Name}}
 	}
 }
 {{end}}
-type substate struct {
+type {{.TypeName | ToCamel }} struct {
 {{- range $index, $field := .Fields}}
 {{$field.Name}} {{$field.Type}}
 {{- end}}
 }
 {{range $index, $field:= .Fields}}
-// {{$field.Method}} implements the Substate interface.
-func (s *substate) {{$field.Method}}{{$field.Params}} {{$field.Results}} {
+// {{$field.Method}} implements the {{$.TypeName}} interface.
+func (s *{{$.TypeName | ToCamel}}) {{$field.Method}}{{$field.Params}} {{$field.Results}} {
 	return s.{{$field.Name}}
 }
 {{- end}}
