@@ -6,6 +6,17 @@ import (
 	"testing"
 )
 
+// NewSubstate returns a concrete implementation of Substate.
+func NewSubstate(
+	fooClient FooClient,
+	barClient BarClient,
+) *substate {
+	return &substate{
+		fooClient: fooClient,
+		barClient: barClient,
+	}
+}
+
 // NewSubstateForTesting returns an implementation of Substate which can be used for testing.
 func NewSubstateForTesting(_ testing.TB, injectors ...Injector) *substate {
 	var s substate

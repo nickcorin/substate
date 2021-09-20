@@ -6,6 +6,17 @@ import (
 	"testing"
 )
 
+// NewServiceLocator returns a concrete implementation of ServiceLocator.
+func NewServiceLocator(
+	fooClient FooClient,
+	barClient BarClient,
+) *serviceLocator {
+	return &serviceLocator{
+		fooClient: fooClient,
+		barClient: barClient,
+	}
+}
+
 // NewServiceLocatorForTesting returns an implementation of ServiceLocator which can be used for testing.
 func NewServiceLocatorForTesting(_ testing.TB, injectors ...Injector) *serviceLocator {
 	var s serviceLocator

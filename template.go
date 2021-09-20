@@ -12,9 +12,22 @@ import (
 )
 {{end}}
 
+// New{{.TypeName}} returns a concrete implementation of {{.TypeName}}.
+func New{{.TypeName}}(
+{{- range $index, $field := .Fields}}
+{{$field.Name}} {{$field.Type}},
+{{- end}}
+) *{{.TypeName | ToCamel}} {
+	return &{{.TypeName | ToCamel}}{
+		{{- range $index, $field := .Fields}}
+		{{$field.Name}}: {{$field.Name}},
+		{{- end}}
+	}
+}
+
 // New{{.TypeName}}ForTesting returns an implementation of {{.TypeName}} which can be used for testing.
 func New{{.TypeName}}ForTesting(_ testing.TB, injectors...Injector) *{{.TypeName | ToCamel}}{
-	var s {{.TypeName | ToCamel }}
+	var s {{.TypeName | ToCamel}}
 
 	for _, injector := range injectors {
 		injector.Inject(&s)
